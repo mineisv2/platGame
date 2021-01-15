@@ -1,3 +1,4 @@
+console.log("games.js");
 var c = document.getElementById("myCanvas");
 var ctx = c.getContext("2d");
 
@@ -5,6 +6,9 @@ var width = myCanvas.width = 500;
 var height = myCanvas.height = 500;
 
 var gameSpeed = 33;
+
+//platform format: [height, left side, right side];
+var plats = [[20, 20, 50], [200, 30, 70]];
 
 ctx.beginPath();
 
@@ -42,4 +46,5 @@ function loop(){
 	move();
 	ctx.clearRect(0, 0, width, height);
 	player1.update();
+	drawPlat();
 }

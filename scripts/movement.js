@@ -1,6 +1,7 @@
+console.log("movement.js");
 var speed = 10;
 var gravityS = 0;
-var gravityA = 0.5;
+var gravityA = 0.7;
 var jumpH = 40;
 
 var onGround = false;
@@ -49,11 +50,11 @@ function up(e){
 function jump(jumping){
 	var jumping = setInterval(function(){
 	if(frames < 4){
-		console.log("jumping");
+		//console.log("jumping");
 		player1.y -= jumpH;
 		frames++;
 	}else{
-		console.log("reset");
+		//console.log("reset");
 		frames = 0;
 		clearInterval(jumping);
 	}
