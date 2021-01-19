@@ -8,7 +8,7 @@ var height = myCanvas.height = 500;
 var gameSpeed = 33;
 
 //platform format: [height, left side, right side];
-var plats = [[20, 20, 50], [200, 30, 70]];
+var plats = [[20, 20, 50], [200, 30, 120], [300, 140, 260]];
 
 ctx.beginPath();
 
@@ -47,4 +47,5 @@ function loop(){
 	ctx.clearRect(0, 0, width, height);
 	player1.update();
 	drawPlat();
+	findPlat();
 }

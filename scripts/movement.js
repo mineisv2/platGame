@@ -8,6 +8,10 @@ var onGround = false;
 
 var frames = 0;
 
+var platH = 0;
+var platV = false;
+var inlinePlat = false;
+
 left = false;
 right = false;
 
@@ -62,14 +66,34 @@ function jump(jumping){
 }
 
 function gravity(){
-	if(player1.y < height-40){
-		player1.y += gravityS;
-		gravityS += gravityA;
-	}else if(player1.y > height-40){
-		player1.y = height-40;
+	if(player1.y + gravityS < platH-40){
+		if(player1.y > platH-40){
+			player1.y = platH-40;
+		}else{
+			player1.y += gravityS;
+			gravityS += gravityA;
+		}
 	}else{
 		gravityS = 0;
 		onGround = true;
 	}
 }
 
+function findPlat(){
+	//console.log(inlinePlat);
+	for(var i = 0; i < plats.length; i++){
+		curPlat = plats[i];
+		if(player1.x >= curPlat[1] && player1.x+40 <= curPlat[2]){
+			inlinePlat = true;
+			platH = curPlat[0];
+			console.log(platV);
+			if(player1.y > platH-40){
+				platH = height;
+			}
+			break;
+		}else{
+			inlinePlat = false;
+			platH = height;
+		}
+	}
+}
