@@ -8,7 +8,9 @@ var height = myCanvas.height = 500;
 var gameSpeed = 33;
 
 //platform format: [height, left side, right side];
-var plats = [[20, 20, 50], [200, 30, 120], [300, 140, 260]];
+var plats = [[20, 20, 50], [300, 30, 120], [400, 140, 260]];
+
+var diff = 300;
 
 ctx.beginPath();
 
@@ -48,4 +50,5 @@ function loop(){
 	player1.update();
 	drawPlat();
 	findPlat();
+	scroller();
 }

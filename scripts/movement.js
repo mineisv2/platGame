@@ -2,7 +2,7 @@ console.log("movement.js");
 var speed = 10;
 var gravityS = 0;
 var gravityA = 0.7;
-var jumpH = 40;
+var jumpH = 20;
 
 var onGround = false;
 
@@ -17,10 +17,18 @@ right = false;
 
 function move(){
 	if(left){
-		player1.x += speed;
+		if(player1.x >= 450){
+			diff -= speed;
+		}else{
+			player1.x += speed;
+		}
 	}	
 	if(right){
-		player1.x -= speed;
+		if(player1.x <= 10){
+			diff += speed;
+		}else{
+			player1.x -= speed;
+		}
 	}
 }
 
@@ -53,21 +61,21 @@ function up(e){
 
 function jump(jumping){
 	var jumping = setInterval(function(){
-	if(frames < 4){
-		//console.log("jumping");
-		player1.y -= jumpH;
-		frames++;
-	}else{
-		//console.log("reset");
-		frames = 0;
-		clearInterval(jumping);
-	}
+		if(frames < 7){
+			//console.log("jumping");
+			player1.y -= jumpH;
+			frames++;
+		}else{
+			//console.log("reset");
+			frames = 0;
+			clearInterval(jumping);
+		}
 	}, gameSpeed);
 }
 
 function gravity(){
 	if(player1.y + gravityS < platH-40){
-		if(player1.y > platH-40){
+		if(player1.y+40 > platH){
 			player1.y = platH-40;
 		}else{
 			player1.y += gravityS;
@@ -75,7 +83,18 @@ function gravity(){
 		}
 	}else{
 		gravityS = 0;
-		onGround = true;
+		onGround = true; 
+	}
+}
+
+function drawPlat(){
+	for(var plat = 0; plat < plats.length; plat++){
+		var curPlat = plats[plat];
+		ctx.beginPath();
+		ctx.rect(curPlat[1]+diff, curPlat[0], (curPlat[2]+diff)-(curPlat[1]+diff), 2);
+		//ctx.moveTo(curPlat[1]+diff, curPlat[0]);
+		//ctx.lineTo(curPlat[2]+diff, curPlat[0]);
+		ctx.stroke();
 	}
 }
 
@@ -83,10 +102,10 @@ function findPlat(){
 	//console.log(inlinePlat);
 	for(var i = 0; i < plats.length; i++){
 		curPlat = plats[i];
-		if(player1.x >= curPlat[1] && player1.x+40 <= curPlat[2]){
+		if(player1.x >= curPlat[1]+diff && player1.x+40 <= curPlat[2]+diff){
 			inlinePlat = true;
 			platH = curPlat[0];
-			console.log(platV);
+			//console.log(platV);
 			if(player1.y > platH-40){
 				platH = height;
 			}
