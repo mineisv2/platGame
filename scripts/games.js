@@ -10,7 +10,12 @@ var gameSpeed = 33;
 //platform format: [height, left side, right side];
 var plats = [[20, 20, 50], [300, 30, 120], [400, 140, 260]];
 
+//box format: [x, y]
+var box = [[50, 250]];
+var boxSize = 30;
+
 var diff = 300;
+
 
 ctx.beginPath();
 
@@ -50,5 +55,4 @@ function loop(){
 	player1.update();
 	drawPlat();
 	findPlat();
-	scroller();
 }

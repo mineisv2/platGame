@@ -12,9 +12,13 @@ var platH = 0;
 var platV = false;
 var inlinePlat = false;
 
+var lazerF = 0;
+var lastKey;
+
 left = false;
 right = false;
 
+//moves the player based on the values of left and right
 function move(){
 	if(left){
 		if(player1.x >= 450){
@@ -22,6 +26,7 @@ function move(){
 		}else{
 			player1.x += speed;
 		}
+		lastKey = "left";
 	}	
 	if(right){
 		if(player1.x <= 10){
@@ -29,9 +34,11 @@ function move(){
 		}else{
 			player1.x -= speed;
 		}
+		lastKey = "right";
 	}
 }
 
+//gets keydown and sets left or right to true
 function down(e){
 	//console.log(e.keyCode);
 	if(e.keyCode == 38){
@@ -46,9 +53,13 @@ function down(e){
 	if(e.keyCode == 37){
 		right = true;
 	}
+	if(e.keyCode == 32){
+		shoot();
+	}
 	e.preventDefault();
 }
 
+//gets keyup and sets left or right to false
 function up(e){
 	if(e.keyCode == 39){
 		left = false;
@@ -59,6 +70,7 @@ function up(e){
 	e.preventDefault();
 }
 
+//jump and jump animation
 function jump(jumping){
 	var jumping = setInterval(function(){
 		if(frames < 7){
@@ -73,6 +85,7 @@ function jump(jumping){
 	}, gameSpeed);
 }
 
+//gravity for ground and platform
 function gravity(){
 	if(player1.y + gravityS < platH-40){
 		if(player1.y+40 > platH){
@@ -87,6 +100,7 @@ function gravity(){
 	}
 }
 
+//draws the platforms in the plats array
 function drawPlat(){
 	for(var plat = 0; plat < plats.length; plat++){
 		var curPlat = plats[plat];
@@ -98,6 +112,7 @@ function drawPlat(){
 	}
 }
 
+//logical function that tells if the player is inline with a platform to pass to gravity
 function findPlat(){
 	//console.log(inlinePlat);
 	for(var i = 0; i < plats.length; i++){
@@ -114,5 +129,33 @@ function findPlat(){
 			inlinePlat = false;
 			platH = height;
 		}
+	}
+}
+
+//shots a lazer
+function shoot(){
+	ctx.beginPath();
+	if(lastKey == "left"){
+		var lazer = setInterval(function(){
+			if(lazerF < 20){
+				ctx.rect((player1.x+(lazerF*10)+20), player1.y+20, 10, 10);
+				ctx.stroke();
+				lazerF++;
+			}else{
+				lazerF = 0;
+				clearInterval(lazer);
+			}
+		}, speed*2);
+	}else if(lastKey = "right"){
+		var lazer = setInterval(function(){
+			if(lazerF < 20){
+				ctx.rect((player1.x-(lazerF*10)-20), player1.y+20, 10, 10);
+				ctx.stroke();
+				lazerF++;
+			}else{
+				lazerF = 0;
+				clearInterval(lazer);
+			}
+		}, speed*2);
 	}
 }
